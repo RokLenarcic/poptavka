@@ -71,45 +71,30 @@ import javax.persistence.NamedQuery;
                         + " from UserMessage userMessage\n"
                         + "where userMessage.user = :user"
                         + " and userMessage.message.sender = :user"),
+        //TODO Martin 15.10.2014 - same named queries - duplicit
+        //getSupplierConversationsWithoutOffer == getPotentialDemands
+        //getSupplierConversationsWithoutOfferCount == getPotentialDemandsCount
         @NamedQuery(name = "getPotentialDemands",
                 query = "select latestUserMessage\n"
                         + "from UserMessage as subUserMessage right join\n"
                         + " subUserMessage.message.threadRoot as rootMessage,"
                         + "UserMessage as latestUserMessage\n"
-                        + "where latestUserMessage.id in ( select MAX(userMessage.id)"
-                        + " from UserMessage as userMessage\n"
-                        + "where userMessage.message.demand is not null"
-                        + " and userMessage.message.demand.client.businessUser != :supplier"
-                        + " and userMessage.user = :supplier\n"
-                        + "group by userMessage.message.threadRoot"
-                        + ")"
+                        + "where latestUserMessage.id in (" + UserMessageQueries.MAX_USER_MESSAGE + ")"
                         + " and latestUserMessage.message.threadRoot = rootMessage"
-                        + " and subUserMessage.user = :supplier"
+                        + " and subUserMessage.user = :user"
                         + " and latestUserMessage.message.offer is null\n"
                         + "group by latestUserMessage.id"),
         @NamedQuery(name = "getPotentialDemandsCount",
                 query = "select count(latestUserMessage.id)\n"
                         + "from UserMessage as latestUserMessage\n"
-                        + "where latestUserMessage.id in ( select MAX(userMessage.id)"
-                        + " from UserMessage as userMessage\n"
-                        + "where userMessage.message.demand is not null"
-                        + " and userMessage.message.demand.client.businessUser != :supplier"
-                        + " and userMessage.user = :supplier\n"
-                        + "group by userMessage.message.threadRoot"
-                        + ")"
+                        + "where latestUserMessage.id in (" + UserMessageQueries.MAX_USER_MESSAGE + ")"
                         + " and latestUserMessage.message.offer is null\n"),
         @NamedQuery(name = "getSupplierConversationsWithoutOffer",
                 query = "select latestUserMessage, count(subUserMessage.id)\n"
                         + "from UserMessage as subUserMessage right join\n"
                         + " subUserMessage.message.threadRoot as rootMessage,"
                         + "UserMessage as latestUserMessage\n"
-                        + "where latestUserMessage.id in ( select MAX(userMessage.id)"
-                        + " from UserMessage as userMessage\n"
-                        + "where userMessage.message.demand is not null"
-                        + " and userMessage.message.demand.client.businessUser != :user"
-                        + " and userMessage.user = :user\n"
-                        + "group by userMessage.message.threadRoot"
-                        + ")"
+                        + "where latestUserMessage.id in (" + UserMessageQueries.MAX_USER_MESSAGE + ")"
                         + " and latestUserMessage.message.threadRoot = rootMessage"
                         + " and subUserMessage.user = :user"
                         + " and latestUserMessage.message.offer is null\n"
@@ -125,13 +110,7 @@ import javax.persistence.NamedQuery;
         @NamedQuery(name = "getSupplierConversationsWithoutOfferCount",
                 query = "select count(latestUserMessage.id)\n"
                         + "from UserMessage as latestUserMessage\n"
-                        + "where latestUserMessage.id in ( select MAX(userMessage.id)"
-                        + " from UserMessage as userMessage\n"
-                        + "where userMessage.message.demand is not null"
-                        + " and userMessage.message.demand.client.businessUser != :user"
-                        + " and userMessage.user = :user\n"
-                        + "group by userMessage.message.threadRoot"
-                        + ")"
+                        + "where latestUserMessage.id in (" + UserMessageQueries.MAX_USER_MESSAGE + ")"
                         + " and latestUserMessage.message.offer is null\n"),
         @NamedQuery(name = "getSupplierConversationsWithOfferState",
                 query = "select latestUserMessage, ("

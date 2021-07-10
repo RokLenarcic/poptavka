@@ -17,6 +17,7 @@ import com.eprovement.poptavka.domain.offer.OfferState;
 import com.eprovement.poptavka.domain.user.BusinessUser;
 import com.eprovement.poptavka.domain.user.User;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import org.apache.commons.collections.CollectionUtils;
 import org.hibernate.Criteria;
@@ -69,17 +70,19 @@ public class UserMessageDaoImpl extends GenericHibernateDao<UserMessage> impleme
     }
 
     @Override
-    public long getPotentialDemandsCount(BusinessUser supplier) {
+    public long getPotentialDemandsCount(BusinessUser user) {
         final HashMap<String, Object> queryParams = new HashMap<String, Object>();
-        queryParams.put("supplier", supplier);
+        queryParams.put("user", user);
+        queryParams.put("demandStatuses", Arrays.asList(DemandStatus.ACTIVE, DemandStatus.OFFERED));
 
         return (Long) runNamedQueryForSingleResult("getPotentialDemandsCount", queryParams);
     }
 
     @Override
-    public List<UserMessage> getPotentialDemands(BusinessUser supplier) {
+    public List<UserMessage> getPotentialDemands(BusinessUser user) {
         final HashMap<String, Object> queryParams = new HashMap<String, Object>();
-        queryParams.put("supplier", supplier);
+        queryParams.put("user", user);
+        queryParams.put("demandStatuses", Arrays.asList(DemandStatus.ACTIVE, DemandStatus.OFFERED));
 
         return runNamedQuery("getPotentialDemands", queryParams);
     }
@@ -173,6 +176,7 @@ public class UserMessageDaoImpl extends GenericHibernateDao<UserMessage> impleme
     public long getSupplierConversationsWithoutOfferCount(BusinessUser user) {
         final HashMap<String, Object> queryParams = new HashMap<String, Object>();
         queryParams.put("user", user);
+        queryParams.put("demandStatuses", Arrays.asList(DemandStatus.ACTIVE, DemandStatus.OFFERED));
 
         return ((Long) runNamedQueryForSingleResult(
             "getSupplierConversationsWithoutOfferCount",
@@ -221,6 +225,7 @@ public class UserMessageDaoImpl extends GenericHibernateDao<UserMessage> impleme
         String queryName) {
         final HashMap<String, Object> queryParams = new HashMap<String, Object>();
         queryParams.put("user", user);
+        queryParams.put("demandStatuses", Arrays.asList(DemandStatus.ACTIVE, DemandStatus.OFFERED));
 
         List<Object[]> unread = runNamedQuery(
                 queryName,

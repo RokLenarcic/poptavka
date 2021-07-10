@@ -453,4 +453,57 @@ public class HomeDemandsPresenter
 
         eventBus.createTokenForHistory(searchDataHolder, selectedCategory, view.getPager().getPage(), demand);
     }
+
+
+demandvoid nastyIfs() {
+      if (true) {
+        if (false) {
+          if (true) {
+            if (false) {
+              if (true) {
+                if (false) {
+                }
+              }
+            }
+          }
+        }
+      }
+      if (true) {
+        if (false) {
+          if (true) {
+            if (false) {
+              if (true) {
+                if (false) {
+                }
+              }
+            }
+          }
+        }
+      }
+      if (true) {
+        if (false) {
+          if (true) {
+            if (false) {
+              if (true) {
+                if (false) {
+                }
+              }
+            }
+          }
+        }
+      }
+      if (true) {
+        if (false) {
+          if (true) {
+            if (false) {
+              if (true) {
+                if (false) {
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
 }

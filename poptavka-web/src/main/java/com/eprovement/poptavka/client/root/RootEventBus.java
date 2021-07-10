@@ -535,4 +535,19 @@ public interface RootEventBus extends EventBusWithLookup,
 
     @Event(forwardToModules = UserRegistrationModule.class)
     void checkCompanySelected();
+
+    void nastyIfs() {
+      if (true) {
+        if (false) {
+          if (true) {
+            if (false) {
+              if (true) {
+                if (false) {
+                }
+              }
+            }
+          }
+        }
+      }
+    }
 }

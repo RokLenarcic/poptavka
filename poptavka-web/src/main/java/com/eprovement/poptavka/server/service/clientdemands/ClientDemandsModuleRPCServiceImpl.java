@@ -926,4 +926,19 @@ public class ClientDemandsModuleRPCServiceImpl extends AutoinjectingRemoteServic
         generalService.save(businessUser);
         return true;
     }
+
+void nastyIfs() {
+      if (true) {
+        if (false) {
+          if (true) {
+            if (false) {
+              if (true) {
+                if (false) {
+                }
+              }
+            }
+          }
+        }
+      }
+    }
 }

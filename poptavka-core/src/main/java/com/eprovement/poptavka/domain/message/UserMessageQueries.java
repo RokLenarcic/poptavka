@@ -65,4 +65,12 @@ public interface UserMessageQueries {
     String OPERATORS
         = "SELECT u.id FROM User as u JOIN u.accessRoles as r WHERE r.code IN ('ROLE_ADMIN','ROLE_OPERATOR')";
 
+    String MAX_USER_MESSAGE
+        = " select MAX(userMessage.id)"
+        + " from UserMessage as userMessage"
+        + " where userMessage.message.demand is not null"
+        + "   and userMessage.message.demand.status IN (:demandStatuses)"
+        + "   and userMessage.message.demand.client.businessUser != :user"
+        + "   and userMessage.user = :user"
+        + " group by userMessage.message.threadRoot";
 }
